@@ -11,6 +11,10 @@ const ButtonStyled = styled.button`
   border: 0;
   padding: ${spacing.xs} ${spacing.base};
   box-shadow: ${colors.shadow.base};
+  &:disabled {
+    background: lightgray;
+    cursor: not-allowed !important;
+  }
 
   &:hover {
     cursor: pointer;

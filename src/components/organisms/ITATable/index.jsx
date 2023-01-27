@@ -12,7 +12,7 @@ import TableHeader from './TableHeader'
 import { Button } from '../../atoms'
 import { FlexBox } from '../../../styles'
 import EmptyTable from './EmptyTable'
-import Pagination from './Pagination/Pagination'
+import { Pagination } from './pagination'
 
 function Table({ columns, data, showHeader = true, loading }) {
   const { dispatch } = useContext(TableContext)

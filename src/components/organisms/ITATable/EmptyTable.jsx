@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableCell } from './styles'
+import styled from 'styled-components'
 
 function EmptyTable() {
   const columns = [
@@ -57,6 +57,11 @@ function EmptyTable() {
       id: '10',
     },
   ]
+
+  const TableCell = styled.td`
+    border: 1px solid;
+    padding: 0.9rem;
+  `
 
   return (
     <>

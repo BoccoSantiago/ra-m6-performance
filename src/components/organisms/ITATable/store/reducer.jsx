@@ -5,8 +5,8 @@ export const initialState = {
   columns: [],
   limit: 10,
   currentPage: 1,
-  sortKey: 'id',
-  sortOrder: 'asc',
+  sortColumn: '',
+  sortDirection: 'asc',
 }
 
 export const Actions = {
@@ -14,8 +14,8 @@ export const Actions = {
   SET_COLUMNS: 'SET_COLUMNS',
   SET_CURRENTPAGE: 'SET_CURRENTPAGE',
   SET_LIMIT: 'SET_LIMIT',
-  SET_SORT_ORDER: 'SET_ORDER',
-  SET_SORT_KEY: 'SET_SORT_KEY',
+  SET_SORT_DIRECTION: 'SET_SORT_DIRECTION',
+  SET_SORT_COLUMN: 'SET_SORT_COLUMN',
 }
 
 // eslint-disable-next-line default-param-last
@@ -39,13 +39,13 @@ export const tableReducer = (state = initialState, action) => {
       return createNextState(state, (draft) => {
         draft.currentPage = action.payload
       })
-    case Actions.SET_SORT:
+    case Actions.SET_SORT_COLUMN:
       return createNextState(state, (draft) => {
-        draft.currentPage = action.payload
+        draft.sortColumn = action.payload
       })
-    case Actions.SET_SORT_KEY:
+    case Actions.SET_SORT_DIRECTION:
       return createNextState(state, (draft) => {
-        draft.currentPage = action.payload
+        draft.sortDirection = action.payload
       })
 
     default:
