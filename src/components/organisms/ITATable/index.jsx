@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable import/named */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
@@ -10,8 +11,10 @@ import TableBody from './TableBody'
 import TableHeader from './TableHeader'
 import { Button } from '../../atoms'
 import { FlexBox } from '../../../styles'
+import EmptyTable from './EmptyTable'
+import Pagination from './Pagination/Pagination'
 
-function Table({ columns, data, showHeader = true }) {
+function Table({ columns, data, showHeader = true, loading }) {
   const { dispatch } = useContext(TableContext)
 
   useEffect(() => {
@@ -36,10 +39,17 @@ function Table({ columns, data, showHeader = true }) {
           <Button onClick={onDownload}>Descargar</Button>
         </FlexBox>
       </div>
-      <TableStyled ref={tableRef}>
-        {showHeader && <TableHeader />}
-        <TableBody />
-      </TableStyled>
+      {loading ? (
+        <TableStyled>
+          <EmptyTable />
+        </TableStyled>
+      ) : (
+        <TableStyled ref={tableRef}>
+          {showHeader && <TableHeader />}
+          <TableBody />
+        </TableStyled>
+      )}
+      <Pagination />
     </div>
   )
 }

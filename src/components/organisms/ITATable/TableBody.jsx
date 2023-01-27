@@ -5,10 +5,14 @@ import { TableCell } from './styles'
 function TableBody() {
   const { state } = useContext(TableContext)
 
-  const { data, columns } = state
+  const { data, columns, currentPage, limit } = state
+
+  const startIndex = (currentPage - 1) * limit
+  const endIndex = startIndex + limit
+
   return (
     <tbody>
-      {data?.map((d) => (
+      {data?.slice(startIndex, endIndex).map((d) => (
         <tr key={d.id}>
           {columns
             .filter((col) => !col.isHidden)
