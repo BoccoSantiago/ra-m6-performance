@@ -6,27 +6,17 @@ import { Actions } from './store/reducer'
 
 function TableHeader() {
   const { dispatch, state } = useContext(TableContext)
-  const { columns, data, sortColumn, sortDirection } = state
+  const { columns, sortColumn, sortDirection } = state
 
-  const handleSort = (column) => {
-    const dataArray = Object.values(data)
-    const sortedData = dataArray.sort((a, b) => {
-      if (sortDirection === 'asc') {
-        return a[sortColumn] > b[sortColumn] ? 1 : -1
-      }
-      return a[sortColumn] < b[sortColumn] ? 1 : -1
+  const handleSort = (column, sort) => {
+    dispatch({
+      type: Actions.SET_SORT,
+      payload: {
+        sortDirection,
+        sortColumn: column,
+        sortable: sort,
+      },
     })
-    if (sortColumn === column) {
-      dispatch({
-        type: Actions.SET_SORT_DIRECTION,
-        payload: sortDirection === 'asc' ? 'desc' : 'asc',
-      })
-      dispatch({ type: Actions.SET_SORT_COLUMN, payload: column })
-    } else {
-      dispatch({ type: Actions.SET_SORT_COLUMN, payload: column })
-      dispatch({ type: Actions.SET_SORT_DIRECTION, payload: 'asc' })
-    }
-    dispatch({ type: Actions.SET_DATA, payload: sortedData })
   }
 
   return (
@@ -37,15 +27,15 @@ function TableHeader() {
           .map((col) => (
             <TableCell
               style={{ cursor: 'pointer' }}
-              onClick={() => handleSort(col.id)}
+              onClick={() => handleSort(col.id, col.sort)}
               as="th"
               key={col.id}
             >
               {col.label}{' '}
-              {sortColumn === col.id
+              {sortColumn === col.id && col.sort
                 ? sortDirection === 'asc'
-                  ? '▲'
-                  : '▼'
+                  ? '▼'
+                  : '▲'
                 : ''}
             </TableCell>
           ))}

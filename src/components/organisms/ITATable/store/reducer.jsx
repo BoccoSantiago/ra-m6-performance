@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { createNextState } from '@reduxjs/toolkit'
 
 export const initialState = {
@@ -5,7 +6,7 @@ export const initialState = {
   columns: [],
   limit: 10,
   currentPage: 1,
-  sortColumn: '',
+  sortColumn: null,
   sortDirection: 'asc',
 }
 
@@ -14,8 +15,7 @@ export const Actions = {
   SET_COLUMNS: 'SET_COLUMNS',
   SET_CURRENTPAGE: 'SET_CURRENTPAGE',
   SET_LIMIT: 'SET_LIMIT',
-  SET_SORT_DIRECTION: 'SET_SORT_DIRECTION',
-  SET_SORT_COLUMN: 'SET_SORT_COLUMN',
+  SET_SORT: 'SET_SORT',
 }
 
 // eslint-disable-next-line default-param-last
@@ -39,13 +39,28 @@ export const tableReducer = (state = initialState, action) => {
       return createNextState(state, (draft) => {
         draft.currentPage = action.payload
       })
-    case Actions.SET_SORT_COLUMN:
-      return createNextState(state, (draft) => {
-        draft.sortColumn = action.payload
+
+    case Actions.SET_SORT:
+      const dataArray = Object.values(state.data)
+      const { sortColumn, sortDirection, sortable } = action.payload
+      const sortedData = dataArray.sort((a, b) => {
+        if (sortable) {
+          if (sortDirection === 'asc') {
+            return a[sortColumn] > b[sortColumn] ? 1 : -1
+          }
+          return a[sortColumn] < b[sortColumn] ? 1 : -1
+        }
+        return false
       })
-    case Actions.SET_SORT_DIRECTION:
       return createNextState(state, (draft) => {
-        draft.sortDirection = action.payload
+        draft.data = sortedData
+
+        if (draft.sortColumn !== sortColumn) {
+          draft.sortColumn = sortColumn
+          draft.sortDirection = draft.sortDirection === 'asc' ? 'desc' : 'asc' // Si no le pongo este ternario al darle click a una columna por segunda vez me reordena las otras columnas y no entiendo porque.
+        } else {
+          draft.sortDirection = draft.sortDirection === 'asc' ? 'desc' : 'asc'
+        }
       })
 
     default:

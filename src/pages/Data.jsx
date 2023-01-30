@@ -9,6 +9,7 @@ const columns = [
   {
     id: 'title',
     label: 'Nombre',
+    sort: true,
   },
   {
     id: 'price',
@@ -18,18 +19,22 @@ const columns = [
         {row.price} €
       </span>
     ),
+    sort: true,
   },
   {
     id: 'district',
     label: 'Barrio',
+    sort: true,
   },
   {
     id: 'city',
     label: 'Ciudad',
+    sort: true,
   },
   {
     id: 'type',
     label: 'Tipo',
+    sort: true,
   },
 ]
 
