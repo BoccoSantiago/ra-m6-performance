@@ -41,10 +41,12 @@ const columns = [
 function Data() {
   const { data, loading } = useFetch(urls.houses)
 
+  const MemoizedITATable = React.memo(ITATable)
+
   return (
     <Body>
       <Container style={{ marginTop: '2rem' }}>
-        <ITATable columns={columns} data={data} loading={loading} />
+        <MemoizedITATable columns={columns} data={data} loading={loading} />
       </Container>
     </Body>
   )

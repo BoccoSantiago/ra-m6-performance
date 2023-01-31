@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import { FlexBox } from '../../../../styles'
 // eslint-disable-next-line import/named
 import { Button } from '../../../atoms'
@@ -10,13 +10,17 @@ function PrevNextPage() {
 
   const pages = Math.ceil(data?.length / limit)
 
-  const handlePrevPage = () => {
-    dispatch({ type: 'SET_CURRENTPAGE', payload: currentPage - 1 })
-  }
+  const handlePrevPage = useMemo(() => {
+    return () => {
+      dispatch({ type: 'SET_CURRENTPAGE', payload: currentPage - 1 })
+    }
+  }, [dispatch, currentPage])
 
-  const handleNextPage = () => {
-    dispatch({ type: 'SET_CURRENTPAGE', payload: currentPage + 1 })
-  }
+  const handleNextPage = useMemo(() => {
+    return () => {
+      dispatch({ type: 'SET_CURRENTPAGE', payload: currentPage + 1 })
+    }
+  }, [dispatch, currentPage])
 
   return (
     <FlexBox direction="row" gap="5px" align="center">
